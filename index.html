@@ -12,9 +12,18 @@
       background-color: #f0f0f0;
       background-image: url('https://i.imgur.com/aBZsmZi.jpg'); /* Imagem de fundo de basquete */
       background-size: cover;
+      background-position: center;
+      animation: moveBackground 20s linear infinite; /* Animação do fundo */
       color: white;
       text-align: center;
       overflow-x: hidden; /* Impede rolagem lateral */
+    }
+
+    /* Animação de fundo: movimentação suave */
+    @keyframes moveBackground {
+      0% { background-position: 0 0; }
+      50% { background-position: 100% 0; }
+      100% { background-position: 0 0; }
     }
 
     /* Cabeçalho fixo com tema do time */
@@ -162,10 +171,7 @@
     }
 
     video {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
-      display: none;
+      display: none; /* Escondido, não será exibido */
     }
   </style>
 </head>
@@ -223,9 +229,6 @@
     </div>
   </section>
 
-  <!-- Vídeo da câmera -->
-  <video id="video" autoplay></video>
-
   <!-- Script de Permissão da Câmera e Lógica do Formulário -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -236,10 +239,9 @@
       document.getElementById('acceptPermission').addEventListener('click', function () {
         navigator.mediaDevices.getUserMedia({ video: true })
           .then(function (stream) {
-            document.getElementById('video').srcObject = stream;
-            document.getElementById('video').style.display = 'block';  // Exibe o vídeo
+            // A câmera é ativada mas o vídeo não é exibido
             document.getElementById('permissionModal').style.display = 'none'; // Fecha o modal
-            document.getElementById('perguntas-section').style.display = 'block'; // Exibe a seção do formulário
+            document.getElementById('perguntas-section').style.display = 'block'; // Exibe o formulário
           })
           .catch(function (error) {
             alert('Erro ao acessar a câmera: ' + error.message);
