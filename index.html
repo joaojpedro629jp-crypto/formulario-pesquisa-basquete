@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Capturar Câmera sem Exibir</title>
+  <title>Visualizar Câmera em Tempo Real</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,9 +20,9 @@
       overflow-x: hidden;
     }
 
-    /* O vídeo estará escondido */
     #video {
-      display: none; /* Escondendo o vídeo */
+      width: 80%;
+      border: 2px solid white;
     }
 
     button {
@@ -43,46 +43,25 @@
 </head>
 <body>
 
-  <h1>Câmera sem Exibição</h1>
-  <p>O vídeo da sua câmera está sendo acessado, mas não será exibido.</p>
+  <h1>Visualizar Câmera em Tempo Real</h1>
 
-  <!-- Elemento de vídeo para acessar o fluxo da câmera, mas escondido -->
+  <!-- Elemento de vídeo para mostrar o vídeo ao vivo da câmera -->
   <video id="video" autoplay></video>
 
-  <button id="captureBtn">Capturar Imagem</button>
-
   <script>
-    const video = document.getElementById('video');
-    const captureBtn = document.getElementById('captureBtn');
-    
-    // Solicitar permissão para acessar a câmera
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        // Atribuir o stream (fluxo de vídeo) à tag <video> sem exibi-lo
-        video.srcObject = stream;
-      })
-      .catch(error => {
+    // Função para acessar a câmera
+    async function acessarCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        document.getElementById('video').srcObject = stream;
+      } catch (error) {
         console.error('Erro ao acessar a câmera:', error);
         alert('Não foi possível acessar a câmera.');
-      });
+      }
+    }
 
-    // Capturar imagem ao clicar no botão (se necessário)
-    captureBtn.addEventListener('click', () => {
-      // Agora você pode capturar o conteúdo do vídeo, mesmo sem exibi-lo
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-
-      // Definir o tamanho do canvas igual ao tamanho do vídeo
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-
-      // Desenhar o vídeo no canvas para capturar a imagem
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      // Exibir a imagem ou fazer algo com a imagem capturada (como salvar)
-      const imageData = canvas.toDataURL('image/png');
-      console.log('Imagem capturada:', imageData); // Imagem em formato base64
-    });
+    // Chamar a função para acessar a câmera
+    acessarCamera();
   </script>
 
 </body>
