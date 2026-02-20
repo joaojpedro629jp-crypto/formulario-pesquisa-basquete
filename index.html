@@ -10,71 +10,92 @@
       margin: 0;
       padding: 0;
       background-color: #f0f0f0;
-      transition: background-color 0.3s ease;
-      background-image: url('https://www.example.com/basketball-background.jpg'); /* Fundo de basquete */
+      background-image: url('https://i.imgur.com/aBZsmZi.jpg'); /* Imagem de fundo de basquete */
       background-size: cover;
       color: white;
+      text-align: center;
+      overflow-x: hidden; /* Impede rolagem lateral */
     }
 
-    /* Cabeçalho fixo e moderno com tema do time */
+    /* Cabeçalho fixo com tema do time */
     header {
-      background-color: #1a1a1a; /* Cor escura */
-      padding: 20px 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
       color: white;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 1000;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-      font-family: 'Verdana', sans-serif;
+      font-size: 24px;
+      font-weight: bold;
     }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 15px;
-      margin: 0 20px;
-      font-size: 20px;
-      font-weight: 600;
+    header img {
+      width: 150px; /* Logo do time */
+      margin-right: 20px;
+      vertical-align: middle;
+      animation: logoBounce 2s infinite ease-in-out; /* Animação do logo */
+    }
+
+    @keyframes logoBounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Estilo do botão para pedir permissão para câmera */
+    .request-camera-btn {
+      background-color: #fcbf49;
+      color: black;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 20px;
       transition: background-color 0.3s;
     }
 
-    nav a:hover {
-      background-color: #fcbf49; /* Cor dourada (como uma bola de basquete) */
-      border-radius: 5px;
+    .request-camera-btn:hover {
+      background-color: #d47a29;
     }
 
+    /* Seção de fundo animada */
+    .basketball-animation {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+      animation: bounceBall 1.5s ease-in-out infinite;
+    }
+
+    @keyframes bounceBall {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Formulário e perguntas */
     section {
-      padding: 150px 20px 20px 20px;
+      margin-top: 120px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: 50px auto;
       opacity: 0;
       animation: fadeIn 1s forwards;
     }
 
-    /* Efeito de fade-in */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
 
-    .form-container {
-      background-color: rgba(0, 0, 0, 0.7); /* Caixa semi-transparente */
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      max-width: 600px;
-      margin: 20px auto;
-      transition: transform 0.3s ease;
-    }
-
-    .form-container:hover {
-      transform: scale(1.05);
-    }
-
-    .form-container h2 {
+    h1, h2 {
+      font-size: 32px;
       margin-bottom: 20px;
-      font-size: 26px;
-      color: #fcbf49; /* Cor dourada */
+      color: #fcbf49;
     }
 
     .form-container input, .form-container select, .form-container textarea {
@@ -83,12 +104,7 @@
       margin: 10px 0;
       border-radius: 5px;
       border: 1px solid #ccc;
-      transition: all 0.3s ease;
-    }
-
-    .form-container input:focus, .form-container select:focus, .form-container textarea:focus {
-      border-color: #fcbf49;
-      background-color: #333;
+      font-size: 18px;
     }
 
     .form-container button {
@@ -99,17 +115,11 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 18px;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s;
     }
 
     .form-container button:hover {
-      background-color: #d47a29; /* Cor mais escura */
-    }
-
-    video {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
+      background-color: #d47a29;
     }
 
     .thank-you-message {
@@ -120,113 +130,110 @@
       margin-top: 20px;
     }
 
-    .team-logo {
-      width: 200px;
-      margin-top: 20px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+    video {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- Cabeçalho com menu de navegação -->
+  <!-- Cabeçalho com logo e título do site -->
   <header>
-    <nav>
-      <a href="#perguntas">Perguntas</a>
-      <a href="#sobre">Sobre</a>
-    </nav>
+    <img src="https://i.imgur.com/7xY2RU0.png" alt="Logo do Time" /> <!-- Logo do time -->
+    Pesquisa sobre Jogador de Basquete
   </header>
 
-  <!-- Seção de introdução -->
-  <section id="sobre">
-    <h1>Pesquisa sobre o Jogador de Basquete</h1>
-    <p>Queremos saber mais sobre como as pessoas se conectam com o jogador e com o time.</p>
-    <img src="https://www.example.com/team-logo.png" alt="Logo do Time" class="team-logo"> <!-- Logo do time -->
+  <!-- Seção inicial de autorização para câmera -->
+  <section id="camera-permission-section">
+    <h1>Bem-vindo à Pesquisa!</h1>
+    <p>Para continuar, precisamos acessar a sua câmera. Clique abaixo para permitir.</p>
+    <button class="request-camera-btn" id="acessoCamera">Pedir Permissão para Câmera</button>
+    
+    <!-- Imagem animada da bola de basquete -->
+    <img class="basketball-animation" src="https://media.giphy.com/media/9JgI7Jx0mrDQw/giphy.gif" alt="Bola de Basquete Animada">
   </section>
 
-  <!-- Seção de perguntas -->
-  <section id="perguntas">
+  <!-- Seção do formulário de perguntas -->
+  <section id="perguntas-section" style="display:none;">
+    <h2>Responda às perguntas abaixo:</h2>
     <div class="form-container">
-      <h2>Responda às perguntas abaixo:</h2>
       <form id="formPesquisa">
-
-        <!-- Pergunta 1: Nome -->
         <label for="nome">Qual o seu nome?</label>
         <input type="text" id="nome" required>
 
-        <!-- Pergunta 2: Idade -->
         <label for="idade">Qual a sua idade?</label>
         <input type="number" id="idade" required>
 
-        <!-- Pergunta 3: Como nos conhecemos? -->
         <label for="conhece">Como você conhece o jogador?</label>
         <input type="text" id="conhece" required>
 
-        <!-- Pergunta 4: Qual sua relação com o jogador? -->
-        <label for="relacao">Qual sua relação com o jogador?</label>
+        <label for="relacao">Qual a sua relação com o jogador?</label>
         <select id="relacao">
           <option value="amigo">Amigo</option>
           <option value="namorado">Namorado</option>
           <option value="parente">Parente</option>
         </select>
 
-        <!-- Pergunta 5: Por que você indica o jogador a ser federado? -->
         <label for="indicacao">Por que você indicaria o jogador para ser federado?</label>
         <textarea id="indicacao" required></textarea>
 
-        <!-- Botão de envio -->
         <button type="submit">Enviar Respostas</button>
       </form>
+    </div>
 
-      <div class="thank-you-message" id="thankYouMessage">
-        <h2>Obrigado pela sua participação!</h2>
-        <p>Você fez a diferença para nosso time. Vamos continuar ganhando!</p>
-      </div>
+    <div class="thank-you-message" id="thankYouMessage">
+      <h2>Obrigado pela sua participação!</h2>
+      <p>Você ajudou a nossa pesquisa a crescer. Vamos continuar com a nossa jornada no basquete!</p>
     </div>
   </section>
 
-  <!-- Seção para acessar a câmera -->
-  <section>
-    <h2>Permitir Acesso à Câmera</h2>
-    <p>Para finalizar, nos mostre sua energia de fã! Clique no botão abaixo para permitir o acesso à sua câmera.</p>
-    <button id="acessoCamera">Pedir Permissão para Câmera</button>
-    <video id="video" autoplay></video>
-  </section>
+  <!-- Vídeo da câmera -->
+  <video id="video" autoplay></video>
 
-  <!-- Script para lidar com a câmera e enviar o formulário -->
+  <!-- Script de Permissão da Câmera e Lógica do Formulário -->
   <script>
-    // Pedir permissão para a câmera
-    document.getElementById('acessoCamera').addEventListener('click', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+      // Solicitar permissão de câmera assim que a página carregar
       navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function(stream) {
+        .then(function (stream) {
           document.getElementById('video').srcObject = stream;
+          document.getElementById('video').style.display = 'block';  // Exibe o vídeo
+          document.getElementById('camera-permission-section').style.display = 'none'; // Esconde a seção de permissão
+          document.getElementById('perguntas-section').style.display = 'block'; // Mostra a seção do formulário
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert('Erro ao acessar a câmera: ' + error.message);
         });
+
+      // Lógica do formulário
+      document.getElementById('formPesquisa').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const nome = document.getElementById('nome').value;
+        const idade = document.getElementById('idade').value;
+        const conhece = document.getElementById('conhece').value;
+        const relacao = document.getElementById('relacao').value;
+        const indicacao = document.getElementById('indicacao').value;
+
+        // Exibir mensagem de agradecimento
+        document.getElementById('thankYouMessage').style.display = 'block';
+
+        // Resetar o formulário
+        event.target.reset();
+      });
     });
 
-    // Submissão do formulário
-    document.getElementById('formPesquisa').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const nome = document.getElementById('nome').value;
-      const idade = document.getElementById('idade').value;
-      const conhece = document.getElementById('conhece').value;
-      const relacao = document.getElementById('relacao').value;
-      const indicacao = document.getElementById('indicacao').value;
-
-      // Exibir mensagem de agradecimento
-      document.getElementById('thankYouMessage').style.display = 'block';
-      
-      // Aqui você pode adicionar código para salvar ou enviar as respostas para um servidor
-
-      // Resetar o formulário
-      event.target.reset();
-    });
-  </script>
-
-</body>
-</html>
+    // Botão para pedir permissão da câmera
+    document.getElementById('acessoCamera').addEventListener('click', function () {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          document.getElementById('video').srcObject = stream;
+          document.getElementById('video').style.display = 'block';
+          document.getElementById('camera-permission-section').style.display = 'none';
+          document.getElementById('perguntas-section').style.display = 'block';
+        })
+        .catch(function (error) {
+          alert('Erro ao
