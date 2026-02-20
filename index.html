@@ -9,7 +9,7 @@
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: black; /* Fundo preto */
+      background-color: black; /* Fundo completamente preto */
       color: white;
       text-align: center;
       height: 100vh;
@@ -20,20 +20,114 @@
       overflow-x: hidden;
     }
 
-    #video {
-      width: 80%;
-      margin-top: 20px;
-      border: 2px solid white;
+    /* Cabeçalho fixo com tema do time */
+    header {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      font-size: 24px;
+      font-weight: bold;
     }
 
-    #canvas {
-      display: none;
-      width: 80%;
-      margin-top: 20px;
-      border: 2px solid white;
+    header img {
+      width: 150px;
+      margin-right: 20px;
+      vertical-align: middle;
     }
 
-    button {
+    /* Estilo do Modal de Permissão */
+    #permissionModal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+    }
+
+    .modal-content {
+      background-color: white;
+      color: black;
+      padding: 30px;
+      width: 70%;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .modal-content h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .modal-content p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .button-group button {
+      background-color: #fcbf49;
+      color: black;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button-group button:hover {
+      background-color: #d47a29;
+    }
+
+    /* Formulário e perguntas */
+    section {
+      margin-top: 120px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: 50px auto;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1, h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #fcbf49;
+    }
+
+    .form-container input, .form-container select, .form-container textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 18px;
+    }
+
+    .form-container button {
       background-color: #fcbf49;
       color: black;
       padding: 12px 20px;
@@ -41,60 +135,121 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 18px;
+      transition: background-color 0.3s;
+    }
+
+    .form-container button:hover {
+      background-color: #d47a29;
+    }
+
+    .thank-you-message {
+      display: none;
+      font-size: 24px;
+      color: #fcbf49;
+      text-align: center;
       margin-top: 20px;
     }
 
-    button:hover {
-      background-color: #d47a29;
+    video {
+      display: none; /* Não mostrar o vídeo da câmera */
     }
   </style>
 </head>
 <body>
 
-  <h1>Pesquisa sobre Jogador de Basquete</h1>
-  <p>Visualize a câmera em tempo real e capture uma imagem!</p>
+  <!-- Cabeçalho com logo e título do site -->
+  <header>
+    <img src="https://i.imgur.com/7xY2RU0.png" alt="Logo do Time" /> <!-- Logo do time -->
+    Pesquisa sobre Jogador de Basquete
+  </header>
 
-  <!-- Elemento de vídeo para capturar o vídeo ao vivo da câmera -->
-  <video id="video" autoplay></video>
+  <!-- Modal de permissão para a câmera -->
+  <div id="permissionModal">
+    <div class="modal-content">
+      <h2>Permitir acesso à câmera</h2>
+      <p>Para continuar a pesquisa, precisamos acessar a sua câmera. Você autoriza?</p>
+      <div class="button-group">
+        <button id="acceptPermission">Permitir</button>
+        <button id="denyPermission">Negar</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- Elemento de canvas para exibir a imagem capturada -->
-  <canvas id="canvas"></canvas>
+  <!-- Seção do formulário de perguntas -->
+  <section id="perguntas-section" style="display:none;">
+    <h2>Responda às perguntas abaixo:</h2>
+    <div class="form-container">
+      <form id="formPesquisa">
+        <label for="nome">Qual o seu nome?</label>
+        <input type="text" id="nome" required>
 
-  <button id="captureBtn">Capturar Imagem</button>
+        <label for="idade">Qual a sua idade?</label>
+        <input type="number" id="idade" required>
 
+        <label for="conhece">Como você conhece o jogador?</label>
+        <input type="text" id="conhece" required>
+
+        <label for="relacao">Qual a sua relação com o jogador?</label>
+        <select id="relacao">
+          <option value="amigo">Amigo</option>
+          <option value="namorado">Namorado</option>
+          <option value="parente">Parente</option>
+        </select>
+
+        <label for="indicacao">Por que você indicaria o jogador para ser federado?</label>
+        <textarea id="indicacao" required></textarea>
+
+        <button type="submit">Enviar Respostas</button>
+      </form>
+    </div>
+
+    <div class="thank-you-message" id="thankYouMessage">
+      <h2>Obrigado pela sua participação!</h2>
+      <p>Você ajudou a nossa pesquisa a crescer. Vamos continuar com a nossa jornada no basquete!</p>
+    </div>
+  </section>
+
+  <!-- Script de Permissão da Câmera e Lógica do Formulário -->
   <script>
-    // Acessar o vídeo da câmera
-    const video = document.getElementById('video');
-    const canvas = document.getElementById('canvas');
-    const captureBtn = document.getElementById('captureBtn');
-    const context = canvas.getContext('2d');
+    document.addEventListener('DOMContentLoaded', function () {
+      // Mostrar o modal de permissão assim que a página carregar
+      document.getElementById('permissionModal').style.display = 'flex';
 
-    // Solicitar permissão para acessar a câmera
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        // Atribuir o stream (fluxo de vídeo) à tag <video>
-        video.srcObject = stream;
-      })
-      .catch(error => {
-        console.error('Erro ao acessar a câmera:', error);
-        alert('Não foi possível acessar a câmera.');
+      // Quando o usuário aceitar a permissão
+      document.getElementById('acceptPermission').addEventListener('click', function () {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function (stream) {
+            // Não mostrar o vídeo da câmera, mas ainda acessar a câmera
+            document.getElementById('permissionModal').style.display = 'none'; // Fecha o modal
+            document.getElementById('perguntas-section').style.display = 'block'; // Exibe o formulário
+          })
+          .catch(function (error) {
+            alert('Erro ao acessar a câmera: ' + error.message);
+          });
       });
 
-    // Capturar imagem da câmera
-    captureBtn.addEventListener('click', () => {
-      // Definir o tamanho do canvas igual ao tamanho do vídeo
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      // Quando o usuário negar a permissão
+      document.getElementById('denyPermission').addEventListener('click', function () {
+        alert('Acesso à câmera negado. Não será possível continuar a pesquisa.');
+        document.getElementById('permissionModal').style.display = 'none'; // Fecha o modal
+      });
 
-      // Desenhar o vídeo no canvas para capturar a imagem
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      // Lógica do formulário
+      document.getElementById('formPesquisa').addEventListener('submit', function (event) {
+        event.preventDefault();
 
-      // Exibir o canvas com a imagem capturada
-      canvas.style.display = 'block';
+        const nome = document.getElementById('nome').value;
+        const idade = document.getElementById('idade').value;
+        const conhece = document.getElementById('conhece').value;
+        const relacao = document.getElementById('relacao').value;
+        const indicacao = document.getElementById('indicacao').value;
 
-      // Opcionalmente, salvar a imagem como um arquivo (gerar uma URL de imagem)
-      const imageData = canvas.toDataURL('image/png');
-      console.log('Imagem capturada:', imageData); // Imagem como URL
+        // Exibir mensagem de agradecimento
+        document.getElementById('thankYouMessage').style.display = 'block';
+
+        // Resetar o formulário
+        event.target.reset();
+      });
     });
   </script>
 
